@@ -1,0 +1,66 @@
+.big{ width: 1.5em; height: 1.5em; }
+
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+.left-addon select  { padding-left:  30px; }
+.right-addon select { padding-right: 30px; }
+
+.btn-primary {
+    color: #fff;
+    background-color: #272f27;
+    border-color: #272f27;
+}
+
+.btn-primary:hover {
+  background-color:#232425;
+  border-color: #232425;
+}
+
+.btnpadd
+{
+    padding-right: 35%;
+    padding-left: 35%;
+}
+
+.innertest{
+ padding-left: 5%;
+ padding-right: 5%; 
+ padding-bottom: 5%;  
+}
+.panel{
+        background-color: rgba(255, 255, 255, 0.29);
+    border: 1px solid transparent;
+    border-radius: 9px;
+}
+
+.panel2{
+        background-color: rgba(241, 232, 232, 0.89);
+    border: 1px solid transparent;
+    border-radius: 9px;
+}
+
+
+@media (max-width: 767px){
+.btnpadd
+{
+    padding-right: 25%;
+    padding-left: 25%;
+}
+
+}

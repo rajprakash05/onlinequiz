@@ -1,0 +1,40 @@
+<div class="test" >
+  <div class="panel">
+  <div class="innertest">
+    <h3> Admin</h3>
+    <div [hidden]="showerr" style="color:#a50e0e" >
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+     Invalid Username or Password 
+     
+   </div>
+   <div [hidden]="showser_err" style="color:#a50e0e" >
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+     You Entered Username and Password does not match
+     
+   </div>
+<br>
+
+     <form [formGroup]="loginForm" novalidate (ngSubmit)="login(loginForm.value,loginForm.valid)">
+
+    <div class="form-group">
+    <div class="inner-addon left-addon">
+      <span class="glyphicon glyphicon-user"></span>
+      <input type="text" class="form-control" formControlName="Username" placeholder="Username" />
+    </div>
+    </div>
+    
+    <div class="form-group">
+    <div class="inner-addon left-addon">
+      <span class="glyphicon glyphicon-lock"></span>
+       <input type="password" class="form-control" formControlName="Password" placeholder="Password"/>
+    </div>
+    </div>
+       
+       <div class=" btnpad">
+       <button type="submit" class="btn btn-primary btn-lg btn-block btnbg" >Login</button>
+       </div>
+       </form>  
+       
+  </div>
+  </div>
+</div>    

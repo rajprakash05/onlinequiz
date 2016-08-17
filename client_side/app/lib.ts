@@ -1,0 +1,1 @@
+export var domain_name  = 'localhost:8080';

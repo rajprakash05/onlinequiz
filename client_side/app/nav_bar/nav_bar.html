@@ -1,0 +1,38 @@
+<div id="mySidenav" class="sidenav" [ngStyle]="{ 'width':snav_w }">
+  <a  class="closebtn" (click)="closeNav()">×</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+  
+  
+</div>
+
+
+
+<nav [hidden]="btnflag" class="navbar navbar-inverse navbar-fixed-top" [ngStyle]="{ 'background-color':nv_bgc, 'border-color':nv_brc }">
+  <div class="container-fluid">
+   
+    <ul  class="nav navbar-nav navbar-left">
+        <li class="padding1">
+       <button  type="button" class="btn btn-default btn-lg" (click)="snav_open()"  >
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+       </button> 
+        </li>
+        
+    </ul>
+    <ul [hidden]="s.signup" class="nav navbar-nav navbar-right  hidden-xs">
+      <li (click)="closeNav()" ><a [routerLink]="['user_reg']" routerLinkActive="active"><button class="btn navbtn"><span class="glyphicon glyphicon-user" ></span> Sign Up</button></a></li>
+      <li  (click)="closeNav()" ><a [routerLink]="['admin_login']" > <button class="btn navbtn"><span class="glyphicon glyphicon-log-in" ></span> Admin</button></a></li>
+
+    </ul>
+    <ul [hidden]="s.login" class="nav navbar-nav navbar-right  hidden-xs">
+      <li  (click)="closeNav()" ><a [routerLink]="['login']" > <button class="btn navbtn"><span class="glyphicon glyphicon-log-in" ></span> Login</button></a></li>
+      <li  (click)="closeNav()" ><a [routerLink]="['admin_login']" > <button class="btn navbtn"><span class="glyphicon glyphicon-log-in" ></span> Admin</button></a></li>
+
+    </ul>
+    
+  </div>
+</nav>
+
+

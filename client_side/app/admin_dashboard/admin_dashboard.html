@@ -1,0 +1,38 @@
+<div id="mySidenav" class="sidenav" [ngStyle]="{ 'width':snav_w }">
+  <a  class="closebtn" (click)="closeNav()">×</a>
+  <a [routerLink]="['single_question_upload']">Question upload</a>
+ 
+  <a   (click)="logout()">Logout</a>
+  
+  
+</div>
+
+
+
+<div>
+<nav [hidden]="btnflag" class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+   
+    
+    <ul class="nav navbar-nav navbar-left  ">
+      
+        <li class="padding1">
+        <button  type="button" class="btn btn-default btn-lg" (click)="snav_open()"  >
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+       </button> 
+        </li>
+     
+    </ul>
+  </div>
+</nav>
+</div>
+
+
+
+<div [ngStyle]="{'padding-left':contentwrap}">
+ 
+     <router-outlet></router-outlet>
+    
+    
+ 
+</div>

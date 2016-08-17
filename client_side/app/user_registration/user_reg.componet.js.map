@@ -1,0 +1,1 @@
+{"version":3,"file":"user_reg.componet.js","sourceRoot":"","sources":["user_reg.componet.ts"],"names":[],"mappings":";;;;;;;;;;AAAA,qBAA0B,eAAe,CAAC,CAAA;AAC1C,iCAAwC,oBAAoB,CAAC,CAAA;AAc7D;IAEI;IAEA,CAAC;IAhBL;QAAC,gBAAS,CAAC;YACP,QAAQ,EAAE,eAAe;YACzB,SAAS,EAAE,CAAC,0CAAuB,CAAC;YACpC,QAAQ,EAAC,gKAAgK;SAO5K,CAAC;;iCAAA;IAQF,gCAAC;AAAD,CAAC,AAND,IAMC;AANY,iCAAyB,4BAMrC,CAAA"}
