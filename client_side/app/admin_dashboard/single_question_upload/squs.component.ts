@@ -3,7 +3,7 @@ import { CORE_DIRECTIVES,NgFor } from '@angular/common';
 import { Http, Headers } from '@angular/http';
 import {SingleQesUploadService} from './sqes.service';
 import {TimepickerComponent,DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
-require("PapaParse-4.1.2/papaparse.js");
+require("../../../../assets/script/papaparse.min.js");
 
 export class Hero {
   options:String[]=[];
