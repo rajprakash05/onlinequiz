@@ -24,12 +24,26 @@
        <timepicker [(ngModel)]="time" ></timepicker>      </div>
     </div>
     </div>
+
+    <div class="row">
+    <div class="btn-group" dropdown keyboardNav="true">
+    <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" dropdownToggle>
+      Upload Questions <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+      <li role="menuitem"><a class="dropdown-item" (click)="showsq()" >Single Question</a></li>
+      <li role="menuitem"><a class="dropdown-item" (click)="showfup()">Upload a file</a></li>
+      
+    </ul>
+  </div>
 </div>
+    
 
 
 
 
-<div [hidden]="qhid">
+
+<div [hidden]="qhid" class="row">
 <div class="form-group">
   <label for="comment">Question</label>
   <textarea [(ngModel)]="hero.question" class="form-control" rows="5" id="comment" required></textarea>
@@ -49,11 +63,13 @@
 
 </div>
 
-<div>
+<div [hidden]="qup" class="row" style="padding-top:10px">
   <label class="btn btn-default btn-file">
     Browse <input type="file" (change)="onChange($event)">
 </label>
 <button type="submit" class="btn-lg" (click)="fileupload()" >Upload</button>
 </div>
-{{file}}
+
+
+</div>
 </div>

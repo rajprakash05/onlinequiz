@@ -23,7 +23,6 @@ exports.Hero = Hero;
 var SingleQueUploadComponent = (function () {
     function SingleQueUploadComponent(sq) {
         this.sq = sq;
-        this.qhid = true;
         this.no_of_opts = [1];
         this.hero = {
             question: "",
@@ -32,6 +31,13 @@ var SingleQueUploadComponent = (function () {
         this.jsonArr = [];
         this.date = new Date();
         this.num = 1;
+        //dropdown
+        this.disabled = false;
+        this.status = { isopen: false };
+        //end
+        //show question_upload
+        this.qhid = true;
+        this.qup = true;
     }
     SingleQueUploadComponent.prototype.createRange = function () {
         if (this.num < 6) {
@@ -56,15 +62,31 @@ var SingleQueUploadComponent = (function () {
         console.log(filename);
         Papa.parse(file, {
             complete: function (results) {
-                console.log("Finished:", results.data[1]);
+                console.log("Finished:", results.data);
             }
         });
+    };
+    SingleQueUploadComponent.prototype.toggled = function (open) {
+        console.log('Dropdown is now: ', open);
+    };
+    SingleQueUploadComponent.prototype.toggleDropdown = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        this.status.isopen = !this.status.isopen;
+    };
+    SingleQueUploadComponent.prototype.showsq = function () {
+        this.qhid = false;
+        this.qup = true;
+    };
+    SingleQueUploadComponent.prototype.showfup = function () {
+        this.qhid = true;
+        this.qup = false;
     };
     SingleQueUploadComponent = __decorate([
         core_1.Component({
             selector: 'squs-upload',
             providers: [sqes_service_1.SingleQesUploadService],
-            directives: [common_1.CORE_DIRECTIVES, ng2_bootstrap_1.TimepickerComponent],
+            directives: [common_1.CORE_DIRECTIVES, ng2_bootstrap_1.TimepickerComponent, ng2_bootstrap_1.DROPDOWN_DIRECTIVES],
             templateUrl: './client_side/app/admin_dashboard/single_question_upload/squs.html',
             styleUrls: ['./client_side/app/admin_dashboard/single_question_upload/squs.css']
         }), 

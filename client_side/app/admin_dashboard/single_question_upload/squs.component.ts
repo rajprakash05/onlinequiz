@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CORE_DIRECTIVES,NgFor } from '@angular/common';
 import { Http, Headers } from '@angular/http';
 import {SingleQesUploadService} from './sqes.service';
-import {TimepickerComponent} from 'ng2-bootstrap/ng2-bootstrap';
-require("../../../../assets/script/papaparse.min.js");
+import {TimepickerComponent,DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+require("PapaParse-4.1.2/papaparse.js");
 
 export class Hero {
   options:String[]=[];
@@ -13,7 +13,7 @@ export class Hero {
 @Component({
   selector: 'squs-upload',
   providers:[SingleQesUploadService],
-  directives: [ CORE_DIRECTIVES,TimepickerComponent ],
+  directives: [ CORE_DIRECTIVES,TimepickerComponent,DROPDOWN_DIRECTIVES ],
   templateUrl: './client_side/app/admin_dashboard/single_question_upload/squs.html',
   styleUrls:['./client_side/app/admin_dashboard/single_question_upload/squs.css'] 
 })
@@ -24,7 +24,7 @@ export class SingleQueUploadComponent {
       
      }
    
-    private qhid:boolean=true;
+   
     no_of_opts:Number[]=[1];
     hero:Hero={
       question:"",
@@ -70,14 +70,42 @@ onChange(event) {
     console.log(filename);
    Papa.parse(file, {
   	complete: function(results) {
-		console.log("Finished:", results.data[1]);
+		console.log("Finished:", results.data);
 	     }
     });
 
   } 
 
+  //dropdown
+  public disabled:boolean = false;
+  public status:{isopen:boolean} = {isopen: false};
+ 
+ 
+  public toggled(open:boolean):void {
+    console.log('Dropdown is now: ', open);
+  }
+ 
+  public toggleDropdown($event:MouseEvent):void {
+    $event.preventDefault();
+    $event.stopPropagation();
+    this.status.isopen = !this.status.isopen;
+  }
+  //end
 
-  
+  //show question_upload
+   private qhid:boolean=true;
+   private qup:boolean=true;
+  showsq(){
+
+    this.qhid=false;
+    this.qup=true;
+  }
+showfup(){
+  this.qhid=true;
+    this.qup=false;
+}
+
+//end of  question_upload
        
        
   
