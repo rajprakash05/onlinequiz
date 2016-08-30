@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var sqes_service_1 = require('./sqes.service');
 var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
+require("PapaParse-4.1.2/papaparse.js");
 var Hero = (function () {
     function Hero() {
         this.options = [];
@@ -22,6 +23,7 @@ exports.Hero = Hero;
 var SingleQueUploadComponent = (function () {
     function SingleQueUploadComponent(sq) {
         this.sq = sq;
+        this.qhid = true;
         this.no_of_opts = [1];
         this.hero = {
             question: "",
@@ -46,6 +48,16 @@ var SingleQueUploadComponent = (function () {
         this.sq.upload(this.hero).subscribe(function (response) {
         }, function (error) {
             console.log(error);
+        });
+    };
+    SingleQueUploadComponent.prototype.onChange = function (event) {
+        var file = event.target.files[0];
+        var filename = file.name.split('.');
+        console.log(filename);
+        Papa.parse(file, {
+            complete: function (results) {
+                console.log("Finished:", results.data[1]);
+            }
         });
     };
     SingleQueUploadComponent = __decorate([

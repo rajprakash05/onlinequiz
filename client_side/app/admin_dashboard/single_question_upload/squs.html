@@ -29,7 +29,7 @@
 
 
 
-<div>
+<div [hidden]="qhid">
 <div class="form-group">
   <label for="comment">Question</label>
   <textarea [(ngModel)]="hero.question" class="form-control" rows="5" id="comment" required></textarea>
@@ -49,4 +49,11 @@
 
 </div>
 
+<div>
+  <label class="btn btn-default btn-file">
+    Browse <input type="file" (change)="onChange($event)">
+</label>
+<button type="submit" class="btn-lg" (click)="fileupload()" >Upload</button>
+</div>
+{{file}}
 </div>

@@ -3,7 +3,7 @@ import { CORE_DIRECTIVES,NgFor } from '@angular/common';
 import { Http, Headers } from '@angular/http';
 import {SingleQesUploadService} from './sqes.service';
 import {TimepickerComponent} from 'ng2-bootstrap/ng2-bootstrap';
-
+require("../../../../assets/script/papaparse.min.js");
 
 export class Hero {
   options:String[]=[];
@@ -21,11 +21,11 @@ export class Hero {
 export class SingleQueUploadComponent {
      
      constructor(private sq:SingleQesUploadService){
-
+      
      }
-
-    
-     no_of_opts:Number[]=[1];
+   
+    private qhid:boolean=true;
+    no_of_opts:Number[]=[1];
     hero:Hero={
       question:"",
       options:[""]
@@ -61,7 +61,26 @@ export class SingleQueUploadComponent {
 
 
         }
-      
+
+       
+onChange(event) {
+    var file = event.target.files[0];
+ 
+    var filename=file.name.split('.');
+    console.log(filename);
+   Papa.parse(file, {
+  	complete: function(results) {
+		console.log("Finished:", results.data[1]);
+	     }
+    });
+
+  } 
+
+
+  
+       
+       
+  
        
         
     }
