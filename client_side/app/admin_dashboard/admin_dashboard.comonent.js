@@ -14,6 +14,7 @@ var http_1 = require('@angular/http');
 var router_1 = require('@angular/router');
 var angular2_jwt_1 = require('angular2-jwt');
 var sharedservice_1 = require('../sharedservice');
+var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
 var AdminDashboardComponent = (function () {
     function AdminDashboardComponent(router, http, authHttp, s) {
         this.router = router;
@@ -21,9 +22,9 @@ var AdminDashboardComponent = (function () {
         this.authHttp = authHttp;
         this.s = s;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
-        this.snav_w = '250px';
+        this.snav_w = '60px';
         this.btnflag = true;
-        this.contentwrap = "250px";
+        this.contentwrap = "60px";
         s.condition = false;
         this.token = localStorage.getItem('id_token');
     }
@@ -34,9 +35,9 @@ var AdminDashboardComponent = (function () {
         this.router.navigate(['/login']);
     };
     AdminDashboardComponent.prototype.snav_open = function () {
-        this.snav_w = '250px';
+        this.snav_w = '60px';
         this.btnflag = true;
-        this.contentwrap = "250px";
+        this.contentwrap = "60px";
         console.log(this.btnflag);
     };
     AdminDashboardComponent.prototype.closeNav = function () {
@@ -48,9 +49,10 @@ var AdminDashboardComponent = (function () {
     AdminDashboardComponent = __decorate([
         core_1.Component({
             selector: 'admin-dashboard',
-            directives: [common_1.CORE_DIRECTIVES, router_1.ROUTER_DIRECTIVES],
+            directives: [common_1.CORE_DIRECTIVES, router_1.ROUTER_DIRECTIVES, ng2_bootstrap_1.TooltipContainerComponent, ng2_bootstrap_1.TooltipDirective],
             templateUrl: './client_side/app/admin_dashboard/admin_dashboard.html',
-            styleUrls: ['./client_side/app/admin_dashboard/admin_dashboard.css']
+            styleUrls: ['./client_side/app/admin_dashboard/admin_dashboard.css'],
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, sharedservice_1.sharedService])
     ], AdminDashboardComponent);

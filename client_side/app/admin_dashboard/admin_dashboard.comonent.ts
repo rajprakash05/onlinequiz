@@ -1,18 +1,20 @@
-import { Component } from '@angular/core';
+import { Component,ChangeDetectionStrategy } from '@angular/core';
 import { CORE_DIRECTIVES } from '@angular/common';
 import { Http, Headers } from '@angular/http';
 import { Router,ROUTER_DIRECTIVES } from '@angular/router';
 import { AuthHttp ,JwtHelper} from 'angular2-jwt';
 import { sharedService } from '../sharedservice';
+import {TooltipContainerComponent,TooltipDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
 
 
 
 @Component({
   selector: 'admin-dashboard',
-  directives: [ CORE_DIRECTIVES,ROUTER_DIRECTIVES ],
+  directives: [ CORE_DIRECTIVES,ROUTER_DIRECTIVES,TooltipContainerComponent,TooltipDirective ],
   templateUrl: './client_side/app/admin_dashboard/admin_dashboard.html',
-  styleUrls:['./client_side/app/admin_dashboard/admin_dashboard.css'] 
+  styleUrls:['./client_side/app/admin_dashboard/admin_dashboard.css'] ,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminDashboardComponent {
   token: string;
@@ -28,7 +30,7 @@ export class AdminDashboardComponent {
   
     
   }
-    
+    inputModel:string;
 
   logout() {
     localStorage.removeItem('id_token');
@@ -37,14 +39,14 @@ export class AdminDashboardComponent {
     this.router.navigate(['/login']);
   }
 
-snav_w='250px';
+snav_w='60px';
 btnflag:boolean=true;
-contentwrap="250px";
+contentwrap="60px";
  snav_open()
     {
-       this.snav_w='250px';
+       this.snav_w='60px';
        this.btnflag=true;
-      this.contentwrap="250px";
+      this.contentwrap="60px";
       console.log(this.btnflag);
       
     }

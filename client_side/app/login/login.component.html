@@ -1,4 +1,4 @@
-<div *ngIf="showform">
+<div *ngIf="showform" class="loginpadding">
 <div  class="test" >
   <div class="panel">
   <div class="innertest">
@@ -38,8 +38,10 @@
        <div class="fg">
        <a [routerLink]="['/forget_password']" > Forgot your password?</a>
        </div>
-       <div class="fg">
-       <a [routerLink]="['/user_reg']" ><button  class="btn btn-primary btn-lg btn-block " >Login</button></a>
+       
+       <div class="hidden-md hidden-lg" >
+         <br>
+       <a [routerLink]="['/user_reg']" style="text-decoration: none"><button  class=" regbtn btn btn-primary  btn-block  " >Register</button></a>
        </div>
   </div>
   </div>

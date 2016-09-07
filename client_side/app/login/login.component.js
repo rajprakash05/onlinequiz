@@ -24,12 +24,14 @@ var LoginComponent = (function () {
         this.events = [];
         this.showerr = true;
         this.showser_err = true;
+        this.showform = false;
         this.loginForm = this.builder.group({
             Email: ['', [common_1.Validators.required, common_1.Validators.pattern("[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}")]],
             Password: ['', [common_1.Validators.required]]
         });
         if (angular2_jwt_1.tokenNotExpired()) {
             s.condition = false;
+            this.showform = false;
             if (localStorage.getItem('user_type') === "admin") {
                 this.router.navigate(['/admin_dashboard']);
             }
@@ -38,6 +40,7 @@ var LoginComponent = (function () {
             }
         }
         else {
+            this.showform = true;
             s.condition = true;
             s.login = true;
             s.signup = false;

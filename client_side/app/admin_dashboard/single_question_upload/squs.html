@@ -1,75 +1,308 @@
-<div class="alignform">
- 
-<div class="container-fluid">
+<div *ngIf="showexam">
+  <div class="container">
+    <div class="jumbotron">
+      <form  #ExamForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+          <input type="text" [(ngModel)]="exam_name" [ngModelOptions]="{standalone: true}"  class="form-control" 
+          placeholder="Title of your Exam"  id="name" required minlength="5" name="name" #name="ngModel">
+          <div [hidden]="!name.pristine || name.pristine && subm" 
+            class="alert alert-danger">
+            Title is required
+          </div>
+        </div> 
+        <div class="row">
+          <div class="col-md-3">
+             <div class="form-group">
+          <select class="form-control" [(ngModel)]="category" [ngModelOptions]="{standalone: true}"  name="Category">
+               <option [disabled]="true" [value]="0">Select Category</option>
+               <option *ngFor="let p of Categories" [value]="p">{{p}}</option>
+          </select>
+        </div> 
+          </div>
+          <div class="col-md-3">
+             <div class="form-group">
+          <select class="form-control" [(ngModel)]="dificulty_level" [ngModelOptions]="{standalone: true}"  name="Category">
+               <option [disabled]="true" [value]="0">Dificulty Level</option>
+               <option *ngFor="let p of  dificulty" [value]="p">{{p}}</option>
+          </select>
+        </div> 
+          </div>
+          <div class="col-md-3">
+             <div class="form-group">
+             <datetime [(ngModel)]="date"  [timepicker]="false" [datepicker]="datepickerOpts" [ngModelOptions]="{standalone: true}">></datetime>
+        </div> 
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+                          <datetime [(ngModel)]="time"  [datepicker]="false" [datepicker]="datepickerOpts" [ngModelOptions]="{standalone: true}">></datetime>
 
-<div class="row">
-    <div class="col-md-4">
-      <div class="form-group ">
-      <label for="No_option">Exam</label>
-      <br><br>
-      <input type="text"  class="form-control"  id="No_option" (ngModelChange)="createRange()">
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="typeofupload" [ngModelOptions]="{standalone: true}"  name="Category" >
+               <option [disabled]="true" [value]="0">Add questions</option>
+               <option *ngFor="let p of  qupload" [value]="p">{{p}}</option>
+          </select>
+          <div [hidden]="typeofupload != '0'|| (typeofupload == '0' && subm)" 
+             class="alert alert-danger">
+           Select any one of the option
+         </div>
+        </div> 
+        <div class="form-group">
+          <button type="submit" class="btn btn-success" [disabled]="!ExamForm.form.valid"  >Create</button>
+        </div>
+      </form>
     </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group ">
-      <label for="No_option">Date</label>
-      <br><br>
-       <input type="text"  class="form-control"  id="No_option" (ngModelChange)="createRange()">
-
-    </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group ">
-      <label for="No_option">Time</label>
-       <timepicker [(ngModel)]="time" ></timepicker>      </div>
-    </div>
-    </div>
-
-    <div class="row">
-    <div class="btn-group" dropdown keyboardNav="true">
-    <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" dropdownToggle>
-      Upload Questions <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-      <li role="menuitem"><a class="dropdown-item" (click)="showsq()" >Single Question</a></li>
-      <li role="menuitem"><a class="dropdown-item" (click)="showfup()">Upload a file</a></li>
-      
-    </ul>
   </div>
 </div>
-    
+
+<div *ngIf="showfileupload">
+  <div class="container">
+    <div class="jumbotron">
+      <h3>{{exam_name}}</h3>
+      <hr>
+      <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Browse&hellip; <input type="file" style="display: none;" (change)="onChange($event)" >
+                    </span>
+                </label>
+                <input type="text" [(ngModel)]="filename" class="form-control" readonly>
+            </div>
+
+    </div>
+ 
+    </div>
+  </div>
 
 
+<div *ngIf="showmanuvaltype">
+  <div class="container">
+    <div class="jumbotron">
+      <h3>{{exam_name}}</h3>
+      <hr>
+      <h4>Add Your  Question</h4>
+      <div *ngIf="showQusblock" class="question_block">
+        <a (click)="showmc()" class="button button-flat " >Multiple Choice</a>
+         <a class="button button-flat " (click)="showtrueorfalse()" >True or False</a>
+            
+      </div>
+      
+      <div *ngIf="showtypemc" >
+        <div class="form-group">
+          <label for="question">Question</label>
+          <textarea  class="form-control" rows="3"  [(ngModel)]="squestons.question"  id="question" required></textarea>
+        </div>
+         <div class="row"> 
+         <div class="col-md-2" >
+           <div class="row">
+             <div class="col-md-6 col-xs-6">
+                 <div class="form-group" >
+             <div class="switch">
+               <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" [(ngModel)]="hasimg" value="yes">
+               <label for="cmn-toggle-1"></label>
+            </div>
+         </div>
+             </div>
+             <div class="col-md-6 col-xs-6" style="padding-left:0px" >
+               <p style="font-size: 14px;"> image({{hasimg?"Yes":"No"}})</p >
+             </div>
+           </div>
+         
+           
+         </div>
+         
+         <div  class="col-md-10">
+            <div *ngIf="hasimg" class="form-group">
+            <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary btnp">
+                       Image URL
+                    </span>
+                </label>
+                <input type="text" [(ngModel)]="squestons.imgurl"  class="form-control" placeholder="Image URL" >
 
+            </div>
+          </div>
+         </div>
+         </div>
 
+           <div class="row"> 
+         <div class="col-md-2" >
+           <div class="row">
+             <div class="col-md-6 col-xs-6">
+                 <div class="form-group" >
+             <div class="switch">
+               <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round" type="checkbox" [(ngModel)]="hasvideo" value="no">
+               <label for="cmn-toggle-4"></label>
+            </div>
+         </div>
+             </div>
+             <div class="col-md-6 col-xs-6" style="padding-left:0px" >
+               <p style="font-size: 14px;"> video({{hasvideo?"Yes":"No"}})</p >
+             </div>
+           </div>
+         
+           
+         </div>
+         
+         <div  class="col-md-10">
+            <div *ngIf="hasvideo" class="form-group">
+            <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary btnp">
+                       Video URL
+                    </span>
+                </label>
+                <input type="text" [(ngModel)]="squestons.videourl" class="form-control" placeholder="Video URL" >
 
-<div [hidden]="qhid" class="row">
-<div class="form-group">
-  <label for="comment">Question</label>
-  <textarea [(ngModel)]="hero.question" class="form-control" rows="5" id="comment" required></textarea>
+            </div>
+          </div>
+         </div>
+         </div>
+        
+        
+        <div class="form-group">
+          
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-ok"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="squestons.correctAns"  required placeholder="Correct Answer">
+            <span class="input-group-addon whitebg"><i class="glyphicon glyphicon-ok" style="color:#5295b7"></i></span>
+          </div>
+        </div>
+
+           <div *ngFor="let no of no_of_opts;let i = index" class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-remove" style="color:red"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="squestons.wrongAns[no]" placeholder="Wrong Answer {{i+1}}"  required>
+            <span class="input-group-addon whitebg wrg" (click)="sub()" ><i class="glyphicon glyphicon-remove" style="color:black"></i></span>
+          </div>
+         
+        </div>
+
+        <div class="form-group">
+          <div class="addbtn" (click)="add()">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add another Option
+          </div>
+        </div>
+
+       
+        <div class="row">
+          <div class="col-md-3 col-md-offset-3"></div>
+         <div class="col-md-3 col-md-offset-3">
+             <a class="button button-flat " (click)="save()" >Save and continue</a>
+         </div>
+        </div>
+        
+ 
+       </div>
+            <div *ngIf="showtypetf" >
+        <div class="form-group">
+          <label for="question">Question</label>
+          <textarea  class="form-control" rows="3"  [(ngModel)]="squestons.question"  id="question" required></textarea>
+        </div>
+         <div class="row"> 
+         <div class="col-md-2" >
+           <div class="row">
+             <div class="col-md-6 col-xs-6">
+                 <div class="form-group" >
+             <div class="switch">
+               <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" [(ngModel)]="hasimg" value="yes">
+               <label for="cmn-toggle-1"></label>
+            </div>
+         </div>
+             </div>
+             <div class="col-md-6 col-xs-6" style="padding-left:0px" >
+               <p style="font-size: 14px;"> image({{hasimg?"Yes":"No"}})</p >
+             </div>
+           </div>
+         
+           
+         </div>
+         
+         <div  class="col-md-10">
+            <div *ngIf="hasimg" class="form-group">
+            <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary btnp">
+                       Image URL
+                    </span>
+                </label>
+                <input type="text" [(ngModel)]="squestons.imgurl"  class="form-control" placeholder="Image URL" >
+
+            </div>
+          </div>
+         </div>
+         </div>
+
+           <div class="row"> 
+         <div class="col-md-2" >
+           <div class="row">
+             <div class="col-md-6 col-xs-6">
+                 <div class="form-group" >
+             <div class="switch">
+               <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round" type="checkbox" [(ngModel)]="hasvideo" value="no">
+               <label for="cmn-toggle-4"></label>
+            </div>
+         </div>
+             </div>
+             <div class="col-md-6 col-xs-6" style="padding-left:0px" >
+               <p style="font-size: 14px;"> video({{hasvideo?"Yes":"No"}})</p >
+             </div>
+           </div>
+         
+           
+         </div>
+         
+         <div  class="col-md-10">
+            <div *ngIf="hasvideo" class="form-group">
+            <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary btnp">
+                       Video URL
+                    </span>
+                </label>
+                <input type="text" [(ngModel)]="squestons.videourl" class="form-control" placeholder="Video URL" >
+
+            </div>
+          </div>
+         </div>
+         </div>
+        
+        
+        <div class="form-group">
+          
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-ok"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="squestons.correctAns"  required placeholder="Correct Answer">
+            <span class="input-group-addon whitebg"><i class="glyphicon glyphicon-ok" style="color:#5295b7"></i></span>
+          </div>
+        </div>
+
+           <div  class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-remove" style="color:red"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="squestons.wrongAns[1]" placeholder="Wrong Answer "  required>
+            <span class="input-group-addon whitebg wrg"  ><i class="glyphicon glyphicon-remove" style="color:#5295b7"></i></span>
+          </div>
+         
+        </div>
+
+       
+
+       
+        <div class="row">
+          <div class="col-md-3 col-md-offset-3"></div>
+         <div class="col-md-3 col-md-offset-3">
+             <a class="button button-flat " (click)="save()" >Save and continue</a>
+         </div>
+        </div>
+        
+ 
+       </div>
+    </div>
+  </div>
 </div>
 
-<div class="form-group opbtn">
-  <label for="No_option">Number of options</label>
-  <input type="text" [(ngModel)]="num" [value]="num" class="form-control"  id="No_option" (ngModelChange)="createRange()">
-</div>
-
-<div *ngFor="let no of no_of_opts; let i = index" class="form-group" >
-  <label for="comment">option {{no}}</label>
-  <textarea [(ngModel)]="hero.options[no]" class="form-control" rows="1" id="comment" required></textarea>
-</div>
-
- <button type="submit" class="btn-lg" (click)="sunmitf()" >Upload</button>
-
-</div>
-
-<div [hidden]="qup" class="row" style="padding-top:10px">
-  <label class="btn btn-default btn-file">
-    Browse <input type="file" (change)="onChange($event)">
-</label>
-<button type="submit" class="btn-lg" (click)="fileupload()" >Upload</button>
-</div>
-
-
-</div>
-</div>
