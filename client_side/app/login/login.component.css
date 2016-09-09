@@ -65,9 +65,9 @@ a:hover{
 @media (max-width: 767px){
 
     .test{
-   padding-left: 10%;
+   padding-left: 5%;
     padding-right: 5%;
-    padding-top: 5px;
+    padding-top: 120px;
     }
 }
 

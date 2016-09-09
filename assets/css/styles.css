@@ -5,18 +5,19 @@ h2 {
 }
 body {
   
-  background-color: white;
+ 
  
   font-size: 18;
   color:black;
+  background-color:white;
+ 
 }
 
 
-.bgimg
-{
-
-  background-image: url("../img/freebg1.jpg");
+.common{
+  background-color: #337ab7;height:100%; overflow:auto;
 }
+
 
 /* Absolute Center Spinner */
 .loading {

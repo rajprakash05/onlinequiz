@@ -1,4 +1,7 @@
 .big{ width: 1.5em; height: 1.5em; }
+.usr{
+    padding-top: 70px;
+}
 
 .inner-addon { 
     position: relative; 

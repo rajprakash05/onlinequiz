@@ -1,8 +1,8 @@
-import { Component,Pipe,PipeTransform } from '@angular/core';
+import { Component,Pipe,PipeTransform,ViewChild } from '@angular/core';
 import { CORE_DIRECTIVES,NgFor,NgIf } from '@angular/common';
 import { Http, Headers } from '@angular/http';
 import {SingleQesUploadService} from './sqes.service';
-import {TimepickerComponent,DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+import {TimepickerComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 import {NKDatetime} from 'ng2-datetime/ng2-datetime';
 require("../../../../assets/script/papaparse.min.js");
 
@@ -22,12 +22,17 @@ export /**
  * name
  */
 class SQuestions {
-  wrongAns:String[]=[];
+  wrongAns1:String;
+  wrongAns2:String;
+  wrongAns3:String;
   question:String;
   correctAns:String;
   imgurl:string;
   videourl:string;
   qtype:string;
+  category:string;
+  dificulty_level:string;
+  sub_category:string;
   
 }
 
@@ -35,7 +40,7 @@ class SQuestions {
 @Component({
   selector: 'squs-upload',
   providers:[SingleQesUploadService],
-  directives: [ CORE_DIRECTIVES,TimepickerComponent,DROPDOWN_DIRECTIVES,NgIf,NKDatetime ],
+  directives: [ CORE_DIRECTIVES,TimepickerComponent,DROPDOWN_DIRECTIVES,NgIf,NKDatetime,TOOLTIP_DIRECTIVES,],
   templateUrl: './client_side/app/admin_dashboard/single_question_upload/squs.html',
   styleUrls:['./client_side/app/admin_dashboard/single_question_upload/squs.css'] 
 })
@@ -45,30 +50,16 @@ export class SingleQueUploadComponent {
      constructor(private sq:SingleQesUploadService){
       
      }
+ 
    Categories = ['Engineering','Science','Maths'];
+   Sub_Categories = ['humanbody','test2','test3'];
    qupload=['typing manually','Upload a file'];
    dificulty=['Low','Medium','High'];
 
    //exam name and categories
-  exam_name:string;
-  category:string='0';
+ 
   typeofupload:string="0";
-  dificulty_level:string="0";
-  date:Date;
-  time:Date;
-  //datepicker option
-   datepickerOpts: any = {
-        startDate: new Date(),
-        autoclose: true,
-        todayBtn: 'linked',
-        todayHighlight: true,
-        assumeNearbyYear: true,
-        format: 'D, d MM yyyy'
-    };
-    time1:Date;
-    change(){
-      this.time1=this.time;
-    }
+
   //flags
   showexam:boolean=true;
   showfileupload:boolean=false;
@@ -83,7 +74,7 @@ export class SingleQueUploadComponent {
 
   onSubmit(){
     this.subm=false;
-    if(this.exam_name && this.typeofupload != '0')
+    if(this.typeofupload != '0')
      if(this.typeofupload==="Upload a file"){
        this.showexam=false;
        this.showfileupload=true;
@@ -97,58 +88,159 @@ export class SingleQueUploadComponent {
   }
 
   squestons:SQuestions={
-  wrongAns:[""],
+  wrongAns1:"",
+  wrongAns2:"",
+  wrongAns3:"",
   question:"",
   correctAns:'',
   imgurl:'',
   videourl:'',
-  qtype:''
+  qtype:'',
+  category:'0',
+  sub_category:'0',
+  dificulty_level:'0'
 
   }; 
 
   //single_question_upload
+      //validation cla
+      Qsave:boolean=false;
+      
+      
+       Q_flag=false;
+       Img_flag=false;
+       Vd_flag=false;
+       validate_fn(){
+         if(this.squestons.question.length==0 && this.Qsave){
+           this.Q_flag=true;
+         }
+         else{
+          this.Q_flag=false;
+         }
+          if(this.squestons.imgurl.length<=6 && this.Qsave ){
+           this.Img_flag=true;
+         }
+         else{
+          this.Img_flag=false;
+         }
+         
+       }
+      
+      //end
   showQusblock:boolean=true;
   showtypemc:boolean=false; 
   showtypetf:boolean=false;
   hasimg:boolean=false;
   hasvideo:boolean=false;
   no_of_opts:Number[]=[];
- num:any=0;
- add(){
-  this.num++;
-  this.createRange();
+  num:any=0;
  
-   }
-   sub(){
-      this.num--;
-  this.createRange();
-   }
    showmc(){
      this.showtypemc=true;
      this.showQusblock=false;
-     this.squestons["qtype"]="mc";
+      this.squestons={
+  wrongAns1:"",
+  wrongAns2:"",
+  wrongAns3:"",
+  question:"",
+  correctAns:'',
+  imgurl:'',
+  videourl:'',
+  qtype:'mc',
+  category:'0',
+  sub_category:'0',
+  dificulty_level:'0'
+
+  }; 
+
 
 
    }
    showtrueorfalse(){
       this.showQusblock=false;
       this.showtypetf=true;
+          this.squestons={
+  wrongAns1:"",
+  wrongAns2:"",
+  wrongAns3:"",
+  question:"",
+  correctAns:'',
+  imgurl:'',
+  videourl:'',
+  qtype:'true_or_false',
+   category:'0',
+  sub_category:'0',
+  dificulty_level:'0'
+
+  }; 
    }
-     createRange(){
-        if(this.num<6){
-         this.no_of_opts= [];
-         for(var i = 1; i <= (this.num); i++){
-         this.no_of_opts.push(i);
-         }
-        } 
+   
+   /* add_category     */
+   add_cate:boolean=false;
+   Acategory:string;
+     show_category(){
+      
+       if(this.squestons.category === "add" ){  
+       this.add_cate=true;
+       this.squestons['category']='0';
+       }
+       else{
+         this.add_cate=false;
+       }
      }
+     add_category(){
+       console.log("ad"+ this.Acategory);
+       
+       if(this.Acategory){
+         this.Categories.push(this.Acategory);
+         this.squestons['category']=this.Acategory;
+         this.Acategory="";
+         this.add_cate=false;
+      }
+      else{
+        this.squestons['category']='0';
+      }
+
+     }
+        /* add_category  End   */
+
+          /* add_Sub_category  Start  */
+             add_sub_cate:boolean=false;
+            A_sub_category:string;
+     show_sub_category(){
+      
+       if(this.squestons.sub_category === "add" ){  
+       this.add_sub_cate=true;
+       this.squestons['sub_category']='0';
+       }
+       else{
+         this.add_sub_cate=false;
+       }
+     }
+     add_sub_category(){
+       
+       
+       if(this.A_sub_category){
+         this.Sub_Categories.push(this.A_sub_category);
+         this.squestons['sub_category']=this.A_sub_category;
+         this.A_sub_category="";
+         this.add_sub_cate=false;
+      }
+      else{
+        this.squestons['sub_category']='0';
+      }
+
+     }
+     /* add_category  End   */
 
      save(){
-       this.squestons.wrongAns.shift();
+       this.Qsave=true;
+       this.validate_fn();
+     
        console.log(this.squestons);
-       this.showtypemc=false;
+     /*  this.showtypemc=false;
        this.showQusblock=true;
-       this.showtypetf=false;
+       this.showtypetf=false; */
        
      }
      //end
@@ -190,24 +282,8 @@ onChange(event) {
      
 }
 
-//dropdown
-  public disabled:boolean = false;
-  public status:{isopen:boolean} = {isopen: false};
-  
- 
-  public toggled(open:boolean):void {
-    console.log('Dropdown is now: ', open);
-  }
- 
-  public toggleDropdown($event:MouseEvent):void {
-    $event.preventDefault();
-    $event.stopPropagation();
-    this.status.isopen = !this.status.isopen;
-  }
-   
-   
-    
-    }
+
+
 
 
   

@@ -7,7 +7,7 @@
 
 
 .jumbotron {
-    padding-top: 70px;
+    padding-top: 30px;
     padding-bottom: 70px;
     margin-bottom: 30px;
     color: inherit;
@@ -152,9 +152,47 @@ a:hover, a:active {
 
 .wrg{
      cursor: pointer;
+     
+          background-color: #3574a9;
+    border-color: #3574a9;
+    color: black;
 }
 
+.wrg:hover{
+        background-color: #1d3d58;
+        border-color: #1d3d58;
+        color: black;
+}
  .btnp{
      background-color: #0b375d;
-    border-color: #0b375d;;
+    border-color: #0b375d;
+    
  }
+.validationfn{
+        margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 200;
+    font-style: italic;
+    color:#b32e40;
+}
+
+.validstate{
+    background-color: white;
+    border-color: #ccc;
+}
+.invalidstate{
+    background-color: #dcafb5;
+    border-color: #b30e0e;
+}
+
+option.add{
+    background-color: black;
+    color: white;
+    
+}
+
+option.add:hover{
+    background-color: brown;
+    color: white;
+
+}

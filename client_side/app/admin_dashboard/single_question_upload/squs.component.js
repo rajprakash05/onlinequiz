@@ -26,7 +26,6 @@ var Questions = (function () {
 exports.Questions = Questions;
 var SQuestions = (function () {
     function SQuestions() {
-        this.wrongAns = [];
     }
     return SQuestions;
 }());
@@ -35,34 +34,36 @@ var SingleQueUploadComponent = (function () {
     function SingleQueUploadComponent(sq) {
         this.sq = sq;
         this.Categories = ['Engineering', 'Science', 'Maths'];
+        this.Sub_Categories = ['humanbody', 'test2', 'test3'];
         this.qupload = ['typing manually', 'Upload a file'];
         this.dificulty = ['Low', 'Medium', 'High'];
-        this.category = '0';
+        //exam name and categories
         this.typeofupload = "0";
-        this.dificulty_level = "0";
-        //datepicker option
-        this.datepickerOpts = {
-            startDate: new Date(),
-            autoclose: true,
-            todayBtn: 'linked',
-            todayHighlight: true,
-            assumeNearbyYear: true,
-            format: 'D, d MM yyyy'
-        };
         //flags
         this.showexam = true;
         this.showfileupload = false;
         this.showmanuvaltype = false;
         this.subm = true;
         this.squestons = {
-            wrongAns: [""],
+            wrongAns1: "",
+            wrongAns2: "",
+            wrongAns3: "",
             question: "",
             correctAns: '',
             imgurl: '',
             videourl: '',
-            qtype: ''
+            qtype: '',
+            category: '0',
+            sub_category: '0',
+            dificulty_level: '0'
         };
         //single_question_upload
+        //validation cla
+        this.Qsave = false;
+        this.Q_flag = false;
+        this.Img_flag = false;
+        this.Vd_flag = false;
+        //end
         this.showQusblock = true;
         this.showtypemc = false;
         this.showtypetf = false;
@@ -70,19 +71,18 @@ var SingleQueUploadComponent = (function () {
         this.hasvideo = false;
         this.no_of_opts = [];
         this.num = 0;
+        /* add_category     */
+        this.add_cate = false;
+        /* add_category  End   */
+        /* add_Sub_category  Start  */
+        this.add_sub_cate = false;
         //end
         this.qes = [];
-        //dropdown
-        this.disabled = false;
-        this.status = { isopen: false };
     }
-    SingleQueUploadComponent.prototype.change = function () {
-        this.time1 = this.time;
-    };
     //onsubmit exam creation
     SingleQueUploadComponent.prototype.onSubmit = function () {
         this.subm = false;
-        if (this.exam_name && this.typeofupload != '0')
+        if (this.typeofupload != '0')
             if (this.typeofupload === "Upload a file") {
                 this.showexam = false;
                 this.showfileupload = true;
@@ -92,37 +92,103 @@ var SingleQueUploadComponent = (function () {
             this.showmanuvaltype = true;
         }
     };
-    SingleQueUploadComponent.prototype.add = function () {
-        this.num++;
-        this.createRange();
-    };
-    SingleQueUploadComponent.prototype.sub = function () {
-        this.num--;
-        this.createRange();
+    SingleQueUploadComponent.prototype.validate_fn = function () {
+        if (this.squestons.question.length == 0 && this.Qsave) {
+            this.Q_flag = true;
+        }
+        else {
+            this.Q_flag = false;
+        }
+        if (this.squestons.imgurl.length <= 6 && this.Qsave) {
+            this.Img_flag = true;
+        }
+        else {
+            this.Img_flag = false;
+        }
     };
     SingleQueUploadComponent.prototype.showmc = function () {
         this.showtypemc = true;
         this.showQusblock = false;
-        this.squestons["qtype"] = "mc";
+        this.squestons = {
+            wrongAns1: "",
+            wrongAns2: "",
+            wrongAns3: "",
+            question: "",
+            correctAns: '',
+            imgurl: '',
+            videourl: '',
+            qtype: 'mc',
+            category: '0',
+            sub_category: '0',
+            dificulty_level: '0'
+        };
     };
     SingleQueUploadComponent.prototype.showtrueorfalse = function () {
         this.showQusblock = false;
         this.showtypetf = true;
+        this.squestons = {
+            wrongAns1: "",
+            wrongAns2: "",
+            wrongAns3: "",
+            question: "",
+            correctAns: '',
+            imgurl: '',
+            videourl: '',
+            qtype: 'true_or_false',
+            category: '0',
+            sub_category: '0',
+            dificulty_level: '0'
+        };
     };
-    SingleQueUploadComponent.prototype.createRange = function () {
-        if (this.num < 6) {
-            this.no_of_opts = [];
-            for (var i = 1; i <= (this.num); i++) {
-                this.no_of_opts.push(i);
-            }
+    SingleQueUploadComponent.prototype.show_category = function () {
+        if (this.squestons.category === "add") {
+            this.add_cate = true;
+            this.squestons['category'] = '0';
+        }
+        else {
+            this.add_cate = false;
         }
     };
+    SingleQueUploadComponent.prototype.add_category = function () {
+        console.log("ad" + this.Acategory);
+        if (this.Acategory) {
+            this.Categories.push(this.Acategory);
+            this.squestons['category'] = this.Acategory;
+            this.Acategory = "";
+            this.add_cate = false;
+        }
+        else {
+            this.squestons['category'] = '0';
+        }
+    };
+    SingleQueUploadComponent.prototype.show_sub_category = function () {
+        if (this.squestons.sub_category === "add") {
+            this.add_sub_cate = true;
+            this.squestons['sub_category'] = '0';
+        }
+        else {
+            this.add_sub_cate = false;
+        }
+    };
+    SingleQueUploadComponent.prototype.add_sub_category = function () {
+        if (this.A_sub_category) {
+            this.Sub_Categories.push(this.A_sub_category);
+            this.squestons['sub_category'] = this.A_sub_category;
+            this.A_sub_category = "";
+            this.add_sub_cate = false;
+        }
+        else {
+            this.squestons['sub_category'] = '0';
+        }
+    };
+    /* add_category  End   */
     SingleQueUploadComponent.prototype.save = function () {
-        this.squestons.wrongAns.shift();
+        this.Qsave = true;
+        this.validate_fn();
         console.log(this.squestons);
-        this.showtypemc = false;
-        this.showQusblock = true;
-        this.showtypetf = false;
+        /*  this.showtypemc=false;
+          this.showQusblock=true;
+          this.showtypetf=false; */
     };
     SingleQueUploadComponent.prototype.onChange = function (event) {
         var file = event.target.files[0];
@@ -153,19 +219,11 @@ var SingleQueUploadComponent = (function () {
       
                }*/
     };
-    SingleQueUploadComponent.prototype.toggled = function (open) {
-        console.log('Dropdown is now: ', open);
-    };
-    SingleQueUploadComponent.prototype.toggleDropdown = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        this.status.isopen = !this.status.isopen;
-    };
     SingleQueUploadComponent = __decorate([
         core_1.Component({
             selector: 'squs-upload',
             providers: [sqes_service_1.SingleQesUploadService],
-            directives: [common_1.CORE_DIRECTIVES, ng2_bootstrap_1.TimepickerComponent, ng2_bootstrap_1.DROPDOWN_DIRECTIVES, common_1.NgIf, ng2_datetime_1.NKDatetime],
+            directives: [common_1.CORE_DIRECTIVES, ng2_bootstrap_1.TimepickerComponent, ng2_bootstrap_1.DROPDOWN_DIRECTIVES, common_1.NgIf, ng2_datetime_1.NKDatetime, ng2_bootstrap_1.TOOLTIP_DIRECTIVES,],
             templateUrl: './client_side/app/admin_dashboard/single_question_upload/squs.html',
             styleUrls: ['./client_side/app/admin_dashboard/single_question_upload/squs.css']
         }), 

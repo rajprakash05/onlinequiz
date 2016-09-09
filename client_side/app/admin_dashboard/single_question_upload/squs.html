@@ -1,48 +1,15 @@
+
 <div *ngIf="showexam">
   <div class="container">
     <div class="jumbotron">
       <form  #ExamForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
-        <div class="form-group">
-          <input type="text" [(ngModel)]="exam_name" [ngModelOptions]="{standalone: true}"  class="form-control" 
-          placeholder="Title of your Exam"  id="name" required minlength="5" name="name" #name="ngModel">
-          <div [hidden]="!name.pristine || name.pristine && subm" 
-            class="alert alert-danger">
-            Title is required
-          </div>
-        </div> 
-        <div class="row">
-          <div class="col-md-3">
-             <div class="form-group">
-          <select class="form-control" [(ngModel)]="category" [ngModelOptions]="{standalone: true}"  name="Category">
-               <option [disabled]="true" [value]="0">Select Category</option>
-               <option *ngFor="let p of Categories" [value]="p">{{p}}</option>
-          </select>
-        </div> 
-          </div>
-          <div class="col-md-3">
-             <div class="form-group">
-          <select class="form-control" [(ngModel)]="dificulty_level" [ngModelOptions]="{standalone: true}"  name="Category">
-               <option [disabled]="true" [value]="0">Dificulty Level</option>
-               <option *ngFor="let p of  dificulty" [value]="p">{{p}}</option>
-          </select>
-        </div> 
-          </div>
-          <div class="col-md-3">
-             <div class="form-group">
-             <datetime [(ngModel)]="date"  [timepicker]="false" [datepicker]="datepickerOpts" [ngModelOptions]="{standalone: true}">></datetime>
-        </div> 
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-                          <datetime [(ngModel)]="time"  [datepicker]="false" [datepicker]="datepickerOpts" [ngModelOptions]="{standalone: true}">></datetime>
-
-            </div>
-          </div>
-        </div>
+     
+        
         
         <div class="form-group">
+          <label>Add questions</label>
           <select class="form-control" [(ngModel)]="typeofupload" [ngModelOptions]="{standalone: true}"  name="Category" >
-               <option [disabled]="true" [value]="0">Add questions</option>
+               <option [disabled]="true" [value]="0">Select your options</option>
                <option *ngFor="let p of  qupload" [value]="p">{{p}}</option>
           </select>
           <div [hidden]="typeofupload != '0'|| (typeofupload == '0' && subm)" 
@@ -51,7 +18,7 @@
          </div>
         </div> 
         <div class="form-group">
-          <button type="submit" class="btn btn-success" [disabled]="!ExamForm.form.valid"  >Create</button>
+          <button type="submit" class="button button-flat" [disabled]="!ExamForm.form.valid"  >Next</button>
         </div>
       </form>
     </div>
@@ -61,7 +28,7 @@
 <div *ngIf="showfileupload">
   <div class="container">
     <div class="jumbotron">
-      <h3>{{exam_name}}</h3>
+     
       <hr>
       <div class="input-group">
                 <label class="input-group-btn">
@@ -81,9 +48,9 @@
 <div *ngIf="showmanuvaltype">
   <div class="container">
     <div class="jumbotron">
-      <h3>{{exam_name}}</h3>
+     <h4>Add Your  Question</h4>
       <hr>
-      <h4>Add Your  Question</h4>
+      
       <div *ngIf="showQusblock" class="question_block">
         <a (click)="showmc()" class="button button-flat " >Multiple Choice</a>
          <a class="button button-flat " (click)="showtrueorfalse()" >True or False</a>
@@ -91,9 +58,93 @@
       </div>
       
       <div *ngIf="showtypemc" >
-        <div class="form-group">
+          <div class="row">
+          <div class="col-md-3">
+             <div class="form-group">
+          <select id="cate" class="form-control" [(ngModel)]="squestons.category" [ngModelOptions]="{standalone: true}" (ngModelChange)="show_category()" name="Category">
+               <option [disabled]="true" [value]="0">Select Category</option>
+               <option *ngFor="let p of Categories" [value]="p">{{p}}</option>
+               <option class="add" value="add" >-----ADD-----</option>
+          </select>
+        </div> 
+          </div>
+          <div class="col-md-3">
+             <div class="form-group">
+          <select class="form-control" [(ngModel)]="squestons.sub_category" [ngModelOptions]="{standalone: true}" (ngModelChange)="show_sub_category()"  name="subCategory">
+               <option [disabled]="true" [value]="0">Select Sub Category</option>
+               <option *ngFor="let p of  Sub_Categories" [value]="p">{{p}}</option>
+               <option class="add" value="add" >-----ADD-----</option>
+          </select>
+        </div> 
+            
+          </div>
+          <div class="col-md-3">
+             <div class="form-group">
+          <select class="form-control" [(ngModel)]="squestons.dificulty_level" [ngModelOptions]="{standalone: true}"  name="Category">
+               <option [disabled]="true" [value]="0">Dificulty Level</option>
+               <option *ngFor="let p of  dificulty" [value]="p">{{p}}</option>
+          </select>
+        </div> 
+             
+          </div>
+          <div class="col-md-3">
+           
+          </div>
+        </div>
+
+            <div class="row">
+          <div *ngIf=" add_cate" class="col-md-3">
+            <div class="row">
+             <div class="col-md-10 col-xs-10">
+               <div class="form-group">
+                 <div class="input-group">
+                   
+                 <input type="text"  [(ngModel)]="Acategory" class="form-control" placeholder="add category">
+                  <span class="input-group-addon wrg" (click)="add_category()">Add</span>
+
+                 </div>
+               </div>
+
+             </div>
+              <div class="col-md-2 col-xs-2">
+             </div>
+
+           </div>
+           
+          </div>
+           <div *ngIf=" add_sub_cate" class="col-md-3">
+            <div class="row">
+             <div class="col-md-10 col-xs-10">
+               <div class="form-group">
+                 <div class="input-group">
+                   
+                 <input type="text"  [(ngModel)]="A_sub_category" class="form-control" placeholder="add sub category">
+                  <span class="input-group-addon wrg" (click)="add_sub_category()">Add</span>
+
+                 </div>
+               </div>
+
+             </div>
+              <div class="col-md-2 col-xs-2">
+             </div>
+
+           </div>
+           
+          </div>
+          <div class="col-md-3">
+            
+             
+          </div>
+          <div class="col-md-3">
+           
+          </div>
+        </div>
+        
+        <div class="form-group" >
           <label for="question">Question</label>
-          <textarea  class="form-control" rows="3"  [(ngModel)]="squestons.question"  id="question" required></textarea>
+          <textarea  class="form-control" [ngClass]="{validstate:!Q_flag,invalidstate: Q_flag}" rows="3"  [(ngModel)]="squestons.question" (ngModelChange)=" validate_fn()" id="question" required
+          ></textarea>
+          <p *ngIf="Q_flag"  class="validationfn">* Required</p>
         </div>
          <div class="row"> 
          <div class="col-md-2" >
@@ -122,9 +173,10 @@
                        Image URL
                     </span>
                 </label>
-                <input type="text" [(ngModel)]="squestons.imgurl"  class="form-control" placeholder="Image URL" >
+                <input type="text" [(ngModel)]="squestons.imgurl"   class="form-control" (ngModelChange)=" validate_fn()" [ngClass]="{validstate:!Img_flag,invalidstate: Img_flag}" placeholder="Image URL" >
 
             </div>
+             <p *ngIf="Img_flag"  class="validationfn">Invalid</p>
           </div>
          </div>
          </div>
@@ -173,20 +225,34 @@
           </div>
         </div>
 
-           <div *ngFor="let no of no_of_opts;let i = index" class="form-group">
+          
+           <div  class="form-group">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-remove" style="color:red"></i></span>
-            <input type="text" class="form-control" [(ngModel)]="squestons.wrongAns[no]" placeholder="Wrong Answer {{i+1}}"  required>
-            <span class="input-group-addon whitebg wrg" (click)="sub()" ><i class="glyphicon glyphicon-remove" style="color:black"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="squestons.wrongAns1" placeholder="Wrong Answer 1 "  required>
+            <span class="input-group-addon whitebg "  ><i class="glyphicon glyphicon-remove" style="color:#5295b7"></i></span>
           </div>
          
         </div>
-
-        <div class="form-group">
-          <div class="addbtn" (click)="add()">
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add another Option
+        
+           <div  class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-remove" style="color:red"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="squestons.wrongAns2" placeholder="Wrong Answer 2 "  required>
+            <span class="input-group-addon whitebg "  ><i class="glyphicon glyphicon-remove" style="color:#5295b7"></i></span>
           </div>
+         
         </div>
+        
+           <div  class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-remove" style="color:red"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="squestons.wrongAns3" placeholder="Wrong Answer 3 "  required>
+            <span class="input-group-addon whitebg "  ><i class="glyphicon glyphicon-remove" style="color:#5295b7"></i></span>
+          </div>
+         
+        </div>
+       
 
        
         <div class="row">
@@ -199,6 +265,88 @@
  
        </div>
             <div *ngIf="showtypetf" >
+               <div class="row">
+          <div class="col-md-3">
+             <div class="form-group">
+          <select id="cate" class="form-control" [(ngModel)]="squestons.category" [ngModelOptions]="{standalone: true}" (ngModelChange)="show_category()" name="Category">
+               <option [disabled]="true" [value]="0">Select Category</option>
+               <option *ngFor="let p of Categories" [value]="p">{{p}}</option>
+               <option class="add" value="add" >-----ADD-----</option>
+          </select>
+        </div> 
+          </div>
+          <div class="col-md-3">
+             <div class="form-group">
+          <select class="form-control" [(ngModel)]="squestons.sub_category" [ngModelOptions]="{standalone: true}" (ngModelChange)="show_sub_category()"  name="subCategory">
+               <option [disabled]="true" [value]="0">Select Sub Category</option>
+               <option *ngFor="let p of  Sub_Categories" [value]="p">{{p}}</option>
+               <option class="add" value="add" >-----ADD-----</option>
+          </select>
+        </div> 
+            
+          </div>
+          <div class="col-md-3">
+             <div class="form-group">
+          <select class="form-control" [(ngModel)]="squestons.dificulty_level" [ngModelOptions]="{standalone: true}"  name="Category">
+               <option [disabled]="true" [value]="0">Dificulty Level</option>
+               <option *ngFor="let p of  dificulty" [value]="p">{{p}}</option>
+          </select>
+        </div> 
+             
+          </div>
+          <div class="col-md-3">
+           
+          </div>
+        </div>
+
+            <div class="row">
+          <div *ngIf=" add_cate" class="col-md-3">
+            <div class="row">
+             <div class="col-md-10 col-xs-10">
+               <div class="form-group">
+                 <div class="input-group">
+                   
+                 <input type="text"  [(ngModel)]="Acategory" class="form-control" placeholder="add category">
+                  <span class="input-group-addon wrg" (click)="add_category()">Add</span>
+
+                 </div>
+               </div>
+
+             </div>
+              <div class="col-md-2 col-xs-2">
+             </div>
+
+           </div>
+           
+          </div>
+           <div *ngIf=" add_sub_cate" class="col-md-3">
+            <div class="row">
+             <div class="col-md-10 col-xs-10">
+               <div class="form-group">
+                 <div class="input-group">
+                   
+                 <input type="text"  [(ngModel)]="A_sub_category" class="form-control" placeholder="add sub category">
+                  <span class="input-group-addon wrg" (click)="add_sub_category()">Add</span>
+
+                 </div>
+               </div>
+
+             </div>
+              <div class="col-md-2 col-xs-2">
+             </div>
+
+           </div>
+           
+          </div>
+          <div class="col-md-3">
+            
+             
+          </div>
+          <div class="col-md-3">
+           
+          </div>
+        </div>
+        
         <div class="form-group">
           <label for="question">Question</label>
           <textarea  class="form-control" rows="3"  [(ngModel)]="squestons.question"  id="question" required></textarea>
@@ -284,8 +432,8 @@
            <div  class="form-group">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-remove" style="color:red"></i></span>
-            <input type="text" class="form-control" [(ngModel)]="squestons.wrongAns[1]" placeholder="Wrong Answer "  required>
-            <span class="input-group-addon whitebg wrg"  ><i class="glyphicon glyphicon-remove" style="color:#5295b7"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="squestons.wrongAns1" placeholder="Wrong Answer "  required>
+            <span class="input-group-addon whitebg "  ><i class="glyphicon glyphicon-remove" style="color:#5295b7"></i></span>
           </div>
          
         </div>
@@ -305,4 +453,5 @@
     </div>
   </div>
 </div>
+
 

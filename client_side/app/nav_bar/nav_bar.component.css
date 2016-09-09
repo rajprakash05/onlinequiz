@@ -1,5 +1,5 @@
 .navbar-fixed-top {
-    min-height: 80px;
+    min-height: 60px;
 }
 .navbar-nav > li > a {
     padding-top: 20px;
@@ -78,7 +78,7 @@
     right: 25px;
     font-size: 20px !important;
     border-radius: 15px;
-    background-color: #11735b;
+    background-color: #337ab7;
     
 }
 
@@ -87,13 +87,13 @@
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-/*
+
 .navbar-inverse {
-    background-color: rgba(34, 34, 34, 0);
-    border-color: rgba(8, 8, 8, 0);
+       background-color: #337ab7;
+    border-color: #7e9bb9;
 }
 
-*/
+
 
 .navbar-inverse .navbar-nav>li>a {
     color: #f5f5f5;
